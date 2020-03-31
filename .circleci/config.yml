@@ -1,0 +1,36 @@
+---
+
+version: 2
+jobs:
+  build:
+    working_directory: ~/circleci-demo-python-django
+    docker:
+      - image: circleci/python:3.7.6
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+      - restore_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+      - run:
+          command: |
+            sudo apt install git-secret
+            sudo pip install pipenv
+      - run:
+          command: |
+            pipenv install --dev
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - "venv"
+      - run:
+          command: |
+            echo $GPG_KEY | base64 --decode >> /tmp/gpg.key
+            gpg --import /tmp/gpg.key
+            git secret reveal
+      - run:
+          command: |
+            pipenv run yamllint .
+            pipenv run hass --script check_config --config .

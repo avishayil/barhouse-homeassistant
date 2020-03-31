@@ -1,3 +1,4 @@
+.venv/
 home-assistant.log
 .HA_VERSION
 __pycache__
@@ -5,19 +6,7 @@ __pycache__
 .gitsecret/keys/random_seed
 !*.secret
 secrets.yaml
-.storage/auth
-.storage/auth_provider.homeassistant
-.storage/core.config
-.storage/core.config_entries
-.storage/core.device_registry
-.storage/core.entity_registry
-.storage/core.restore_state
-.storage/frontend.user_data_276ec9561dd2494593a8445348f41ad2
-.storage/frontend.user_data_276ec9561dd2494593a8445348f41ad2
-.storage/google_assistant
-.storage/http
-.storage/onboarding
-.storage/person
+.storage/
 html5_push_registrations.conf
 known_devices.yaml
 .storage/core.area_registry

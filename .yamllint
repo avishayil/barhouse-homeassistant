@@ -4,6 +4,7 @@ ignore: |
   themes/
   custom_components/
   known_devices.yaml
+  .venv/
 
 rules:
   braces:
