@@ -1,0 +1,17 @@
+---
+
+- platform: yamaha
+  name: Yamaha Receiver
+  host: !secret yamaha_host
+  source_ignore:
+    - "HDMI1"
+  source_names:
+    HDMI2: "Mi Box"
+    HDMI3: "Computer"
+    HDMI4: "Playstation 4 Pro"
+    Spotify: "Spotify"
+    Airplay: "Airplay"
+  zone_ignore:
+    - "Zone_2"
+  zone_names:
+    Main_Zone: "Living Room"

@@ -1,0 +1,20 @@
+---
+
+turn_on_projector:
+  alias: Turn On Projector
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.projector
+
+turn_off_projector:
+  alias: Turn Off Projector
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.projector
+    - delay:
+        seconds: 2
+    - service: switch.turn_on
+      data:
+        entity_id: switch.projector

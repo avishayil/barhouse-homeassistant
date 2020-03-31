@@ -1,0 +1,9 @@
+---
+
+open_chelsea:
+  alias: Open to Chelsea
+  sequence:
+    - service: cover.set_cover_position
+      data:
+        entity_id: cover.living_room_cover
+        position: 30

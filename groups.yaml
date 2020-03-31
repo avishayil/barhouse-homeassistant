@@ -1,0 +1,92 @@
+---
+
+# VIEWS
+switches_view:
+  name: Switches
+  entities:
+    - group.lights
+    - group.fans
+
+scripts_view:
+  name: Scripts
+  entities:
+    - group.scripts
+
+media_players_view:
+  name: Media Players
+  entities:
+    - group.media_players
+
+conditioners_view:
+  name: Conditioners
+  entities:
+    - group.conditioners
+
+covers_view:
+  name: Covers
+  entities:
+    - group.covers
+
+# GROUPS
+
+lights:
+  name: Lights
+  entities:
+    - switch.family_room_switch
+    - switch.food_switch
+    - switch.guest_room_switch
+    - switch.kids_switch
+    - switch.kitchen_switch
+    - switch.room_shower_switch
+    - switch.office_switch
+    - switch.laundry_switch
+    - switch.shower_switch
+
+fans:
+  name: Fans
+  entities:
+    - switch.guest_room_venta
+    - switch.kitchen_venta
+    - switch.bedroom_fan
+    - switch.living_room_fan
+    - switch.kids_room_fan
+
+scripts:
+  name: Scripts
+  entities:
+    - script.open_projection_screen
+    - script.close_projection_screen
+    - script.stop_projection_screen
+    - script.open_chelsea
+    - script.turn_on_projector
+    - script.turn_off_projector
+    - script.reciever_volume_up
+    - script.reciever_volume_down
+    - script.reciever_volume_mute
+    - script.reciever_volume_unmute
+    - script.lights_off
+    - script.fans_off
+    - script.covers_on
+    - script.covers_off
+
+media_players:
+  name: Media Players
+  entities:
+    - media_player.yamaha_receiver_living_room
+    - switch.tv
+    - switch.projector
+
+conditioners:
+  name: Conditioners
+  entities:
+    - climate.bedroom_air
+    - climate.mazgan
+    - switch.mazgan
+
+covers:
+  name: Covers
+  entities:
+    - cover.bedroom_cover
+    - cover.living_room_cover
+    - cover.laundry_room_cover
+    - cover.projection_screen

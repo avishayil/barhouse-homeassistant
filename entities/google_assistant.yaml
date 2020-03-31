@@ -1,0 +1,155 @@
+---
+
+project_id: !secret google_assistant_project_id
+service_account:
+  private_key: !secret google_assistant_private_key
+  client_email: !secret google_assistant_client_email
+expose_by_default: false
+secure_devices_pin: !secret secure_devices_pin
+entity_config:
+  switch.left_lamp:
+    name: Left Lamp
+    room: Living Room
+    expose: true
+  switch.right_lamp:
+    name: Right Lamp
+    room: Living Room
+    expose: true
+  switch.living_room_fan:
+    name: Living Room Fan
+    room: Living Room
+    expose: true
+  switch.kids_room_fan:
+    name: Kids Room Fan
+    room: Kids Room
+    expose: true
+  switch.bedroom_fan:
+    name: Bedroom Fan
+    room: Bedroom
+    expose: true
+  switch.kitchen_switch:
+    name: Kitchen Light
+    room: Kitchen
+    expose: true
+  switch.kitchen_venta:
+    name: Kitchen Venta
+    room: Kitchen
+    expose: true
+  switch.laundry_switch:
+    name: Laundry Light
+    room: Laundry Room
+    expose: true
+  switch.office_switch:
+    name: Office Light
+    room: Office
+    expose: true
+  switch.guest_room_switch:
+    name: Guest Room Switch
+    room: Living Room
+    expose: true
+  switch.guest_room_venta:
+    name: Guest Room Venta
+    room: Living Room
+    expose: true
+  switch.food_switch:
+    name: Food Light
+    room: Food Corner
+    expose: true
+  switch.kids_switch:
+    name: Kids Light
+    room: Kids Room
+    expose: true
+  switch.shower_switch:
+    name: Shower Light
+    room: Shower
+    expose: true
+  switch.switcher_webapi:
+    name: Switcher
+    room: Shower
+    expose: true
+  switch.room_shower_switch:
+    name: Room Shower Light
+    room: Bedroom
+    expose: true
+  switch.tv:
+    name: Panasonic TV
+    room: Living Room
+    expose: true
+  media_player.yamaha_receiver_living_room:
+    name: Receiver
+    room: Living Room
+    expose: true
+  climate.mazgan:
+    name: Mazgan
+    room: Living Room
+    expose: true
+  climate.bedroom_air:
+    name: Bedroom Air
+    room: Bedroom
+    expose: true
+  cover.projection_screen:
+    name: Projection Screen
+    room: Living Room
+    aliases:
+      - Screen
+    expose: true
+  cover.bedroom_cover:
+    name: Sleep Cover
+    room: Bedroom
+    expose: true
+  cover.living_room_cover:
+    name: Salon Cover
+    room: Living Room
+    expose: true
+  cover.laundry_room_cover:
+    name: Laundry Cover
+    room: Laundry Room
+    expose: true
+  alarm_control_panel.aarlo_arlo:
+    name: Alarm
+    room: Living Room
+    expose: true
+  script.turn_on_projector:
+    name: Turn on Projector
+    room: Living Room
+    expose: true
+  script.turn_off_projector:
+    name: Turn off Projector
+    room: Living Room
+    expose: true
+  script.open_chelsea:
+    name: Open to Chelsea
+    room: Living Room
+    expose: true
+  script.reciever_volume_up:
+    name: Volume Up Receiver
+    room: Living Room
+    expose: true
+  script.reciever_volume_down:
+    name: Volume Down Receiver
+    room: Living Room
+    expose: true
+  script.reciever_volume_mute:
+    name: Mute Receiver
+    room: Living Room
+    expose: true
+  script.reciever_volume_unmute:
+    name: Unmute Receiver
+    room: Living Room
+    expose: true
+  script.lights_off:
+    name: Lights Off
+    room: General
+    expose: true
+  script.covers_on:
+    name: Covers On
+    room: General
+    expose: true
+  script.covers_off:
+    name: Covers Off
+    room: General
+    expose: true
+  script.fans_off:
+    name: Fans Off
+    room: General
+    expose: true

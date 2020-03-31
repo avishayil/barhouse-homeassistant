@@ -1,0 +1,17 @@
+---
+
+- platform: template
+  sensors:
+    sensibo_bedroom_temp:
+      friendly_name: "Bedroom Temperature (Sensibo)"
+      unit_of_measurement: "°C"
+      icon_template: mdi:thermometer
+      value_template: >-
+        {{ states.climate.bedroom_air.attributes.current_temperature }}
+
+    sensibo_bedroom_humidity:
+      friendly_name: "Bedroom Humidity (Sensibo)"
+      unit_of_measurement: "%"
+      icon_template: mdi:water-percent
+      value_template: >-
+        {{ states.climate.bedroom_air.attributes.current_humidity }}

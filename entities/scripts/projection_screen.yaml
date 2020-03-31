@@ -1,0 +1,31 @@
+---
+
+open_projection_screen:
+  alias: Open Projection Screen
+  sequence:
+    - service: broadlink.send
+      data:
+        host: !secret broadlink_host
+        packet: !secret projection_screen_open
+
+close_projection_screen:
+  alias: Close Projection Screen
+  sequence:
+    - service: broadlink.send
+      data:
+        host: !secret broadlink_host
+        packet: !secret projection_screen_close
+    - delay:
+        seconds: 50
+    - service: broadlink.send
+      data:
+        host: !secret broadlink_host
+        packet: !secret projection_screen_stop
+
+stop_projection_screen:
+  alias: Stop Projection Screen
+  sequence:
+    - service: broadlink.send
+      data:
+        host: !secret broadlink_host
+        packet: !secret projection_screen_stop

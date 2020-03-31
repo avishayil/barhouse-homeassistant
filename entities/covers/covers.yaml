@@ -1,0 +1,67 @@
+---
+
+- platform: template
+  covers:
+    projection_screen:
+      friendly_name: "Projection Screen"
+      device_class: shutter
+      open_cover:
+        service: script.open_projection_screen
+      close_cover:
+        service: script.close_projection_screen
+      stop_cover:
+        service: script.stop_projection_screen
+
+- platform: mqtt
+  name: "Bedroom Cover"
+  device_class: shutter
+  command_topic: "shellies/shellyswitch25-68DE08/roller/0/command"
+  position_topic: "shellies/shellyswitch25-68DE08/roller/0/pos"
+  set_position_topic: "shellies/shellyswitch25-68DE08/roller/0/command/pos"
+  availability_topic: "shellies/shellyswitch25-68DE08/online"
+  qos: 1
+  retain: false
+  payload_open: "open"
+  payload_close: "close"
+  payload_stop: "stop"
+  payload_available: "true"
+  payload_not_available: "false"
+  position_open: 100
+  position_closed: 0
+  optimistic: false
+
+- platform: mqtt
+  name: "Living Room Cover"
+  device_class: shutter
+  command_topic: "shellies/shellyswitch25-692370/roller/0/command"
+  position_topic: "shellies/shellyswitch25-692370/roller/0/pos"
+  set_position_topic: "shellies/shellyswitch25-692370/roller/0/command/pos"
+  availability_topic: "shellies/shellyswitch25-692370/online"
+  qos: 1
+  retain: false
+  payload_open: "open"
+  payload_close: "close"
+  payload_stop: "stop"
+  payload_available: "true"
+  payload_not_available: "false"
+  position_open: 100
+  position_closed: 0
+  optimistic: false
+
+- platform: mqtt
+  name: "Laundry Room Cover"
+  device_class: shutter
+  command_topic: "shellies/shellyswitch25-692148/roller/0/command"
+  position_topic: "shellies/shellyswitch25-692148/roller/0/pos"
+  set_position_topic: "shellies/shellyswitch25-692148/roller/0/command/pos"
+  availability_topic: "shellies/shellyswitch25-692148/online"
+  qos: 1
+  retain: false
+  payload_open: "open"
+  payload_close: "close"
+  payload_stop: "stop"
+  payload_available: "true"
+  payload_not_available: "false"
+  position_open: 100
+  position_closed: 0
+  optimistic: false

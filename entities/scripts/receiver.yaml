@@ -1,0 +1,31 @@
+---
+
+reciever_volume_up:
+  alias: Volume Up
+  sequence:
+    - service: media_player.volume_up
+      data:
+        entity_id: media_player.yamaha_receiver_living_room
+
+reciever_volume_down:
+  alias: Volume Down
+  sequence:
+    - service: media_player.volume_up
+      data:
+        entity_id: media_player.yamaha_receiver_living_room
+
+reciever_volume_mute:
+  alias: Mute
+  sequence:
+    - service: media_player.volume_mute
+      data:
+        entity_id: media_player.yamaha_receiver_living_room
+        is_volume_muted: true
+
+reciever_volume_unmute:
+  alias: Unmute
+  sequence:
+    - service: media_player.volume_mute
+      data:
+        entity_id: media_player.yamaha_receiver_living_room
+        is_volume_muted: false

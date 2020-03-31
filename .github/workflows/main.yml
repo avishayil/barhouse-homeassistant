@@ -1,0 +1,23 @@
+---
+
+name: CI
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            ha_pod_name=$(sudo kubectl get pods -n homeassistant --selector=app=homeassistant -o jsonpath='{.items[0].metadata.name}')
+            sudo kubectl delete pod $ha_pod_name -n homeassistant

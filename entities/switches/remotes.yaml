@@ -1,0 +1,19 @@
+---
+
+- platform: broadlink
+  host: !secret broadlink_host
+  mac: !secret broadlink_mac
+  timeout: 15
+  switches:
+    mazgan:
+      friendly_name: "Mazgan"
+      command_on: !secret mazgan_on
+      command_off: !secret mazgan_off
+    projector:
+      friendly_name: "Projector"
+      command_on: !secret projector_on
+      command_off: !secret projector_off
+    tv:
+      friendly_name: "TV"
+      command_on: !secret tv_on
+      command_off: !secret tv_off

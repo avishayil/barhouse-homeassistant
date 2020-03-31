@@ -1,0 +1,48 @@
+---
+
+lights_off:
+  alias: Lights OFF
+  sequence:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.family_room_switch
+          - switch.food_switch
+          - switch.guest_room_switch
+          - switch.guest_room_venta
+          - switch.kids_switch
+          - switch.kitchen_switch
+          - switch.room_shower_switch
+          - switch.office_switch
+          - switch.laundry_switch
+          - switch.kitchen_venta
+
+fans_off:
+  alias: Fans OFF
+  sequence:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.living_room_fan
+          - switch.kids_fan
+          - switch.bedroom_fan
+
+covers_on:
+  alias: Covers ON
+  sequence:
+    - service: cover.open_cover
+      data:
+        entity_id:
+          - cover.living_room_cover
+          - cover.laundry_room_cover
+          - cover.bedroom_cover
+
+covers_off:
+  alias: Covers OFF
+  sequence:
+    - service: cover.close_cover
+      data:
+        entity_id:
+          - cover.living_room_cover
+          - cover.laundry_room_cover
+          - cover.bedroom_cover

@@ -1,0 +1,40 @@
+---
+
+- platform: mqtt
+  name: "Living Room Fan"
+  state_topic: "living-room-fan/stat/RESULT"
+  value_template: "{{ value_json.POWER }}"
+  command_topic: "living-room-fan/cmnd/POWER"
+  availability_topic: "living-room-fan/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+
+- platform: mqtt
+  name: "Kids Room Fan"
+  state_topic: "kids-room-fan/stat/RESULT"
+  value_template: "{{ value_json.POWER }}"
+  command_topic: "kids-room-fan/cmnd/POWER"
+  availability_topic: "kids-room-fan/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+
+- platform: mqtt
+  name: "Bedroom Fan"
+  state_topic: "bedroom-fan/stat/RESULT"
+  value_template: "{{ value_json.POWER }}"
+  command_topic: "bedroom-fan/cmnd/POWER"
+  availability_topic: "bedroom-fan/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
