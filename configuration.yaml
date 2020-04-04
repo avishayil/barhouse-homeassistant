@@ -23,6 +23,7 @@ person:
 ssdp:
 system_health:
 zeroconf:
+api:
 
 frontend:
   themes:
@@ -32,19 +33,17 @@ frontend:
     - /local/hass-fontawesome-regular.html
     - /local/hass-fontawesome-brands.html
 
-# cast:
-#   media_player:
-#     - host: 10.0.0.19 # Bedroom Home Mini
-#     - host: 10.0.0.12 # Living Room Home
-#     - host: 10.0.0.26 # Kitchen Display
+cast:
+  media_player:
+    - host: !secret bedroom_home_mini_host
+    - host: !secret living_room_home_host
+    - host: !secret kitchen_display_host
 
 # Text to speech
 tts:
   - platform: google_translate
-    cache: true
-    cache_dir: /tmp/tts
-    time_memory: 300
     service_name: google_translate_say
+    base_url: !secret home_url
 
 group: !include groups.yaml
 automation: !include automations.yaml

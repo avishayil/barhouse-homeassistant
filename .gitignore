@@ -1,12 +1,19 @@
+# Virtual Env & Python
 .venv/
+*.pyc
+__pycache__/
+
+# Home Assistant Folders
+.storage/
+tts/
+
+# Home Assistant Files
 home-assistant.log
 .HA_VERSION
-__pycache__
-*.pyc
-.gitsecret/keys/random_seed
-!*.secret
 secrets.yaml
-.storage/
 html5_push_registrations.conf
 known_devices.yaml
-.storage/core.area_registry
+
+# Git Secret
+.gitsecret/keys/random_seed
+!*.secret

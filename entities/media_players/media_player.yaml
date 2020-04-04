@@ -15,3 +15,8 @@
     - "Zone_2"
   zone_names:
     Main_Zone: "Living Room"
+
+- platform: androidtv
+  name: Mi Box
+  device_class: androidtv
+  host: !secret mi_box_host
