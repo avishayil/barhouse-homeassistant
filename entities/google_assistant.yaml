@@ -137,6 +137,18 @@ entity_config:
     name: Unmute Receiver
     room: Living Room
     expose: true
+  script.morning_time:
+    name: Morning Time
+    room: General
+    expose: true
+  script.shower_time:
+    name: Shower Time
+    room: General
+    expose: true
+  script.night_time:
+    name: Night Time
+    room: General
+    expose: true
   script.lights_off:
     name: Lights Off
     room: General

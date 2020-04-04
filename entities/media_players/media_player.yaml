@@ -20,3 +20,5 @@
   name: Mi Box
   device_class: androidtv
   host: !secret mi_box_host
+  adbkey: "./android/adbkey"
+  exclude_unnamed_apps: true

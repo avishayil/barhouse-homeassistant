@@ -6,7 +6,6 @@ lights_off:
     - service: switch.turn_off
       data:
         entity_id:
-          - switch.family_room_switch
           - switch.food_switch
           - switch.guest_room_switch
           - switch.guest_room_venta
@@ -46,3 +45,72 @@ covers_off:
           - cover.living_room_cover
           - cover.laundry_room_cover
           - cover.bedroom_cover
+
+night_time:
+  alias: Night Time
+  sequence:
+    - service: cover.close_cover
+      data:
+        entity_id:
+          - cover.living_room_cover
+          - cover.laundry_room_cover
+          - cover.bedroom_cover
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.food_switch
+          - switch.guest_room_switch
+          - switch.guest_room_venta
+          - switch.kids_switch
+          - switch.kitchen_switch
+          - switch.room_shower_switch
+          - switch.office_switch
+          - switch.kitchen_venta
+    - service: switch.turn_on
+      data:
+        entity_id: switch.laundry_switch
+    - service: media_player.turn_off
+      data:
+        entity_id:
+          - media_player.yamaha_receiver_living_room
+          - media_player.mi_box
+    - service: climate.turn_off
+      data:
+        entity_id: climate.bedroom_air
+
+shower_time:
+  alias: Shower Time
+  sequence:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.bedroom_air
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.bedroom_air
+        temperature: 27
+        hvac_mode: heat
+    - service: switch.turn_on
+      data:
+        entity_id: switch.room_shower_switch
+    - service: cover.close_cover
+      data:
+        entity_id: cover.bedroom_cover
+
+morning_time:
+  alias: Morning Time
+  sequence:
+    - service: climate.turn_off
+      data:
+        entity_id: climate.bedroom_air
+    - service: cover.open_cover
+      data:
+        entity_id:
+          - cover.living_room_cover
+          - cover.laundry_room_cover
+          - cover.bedroom_cover
+    - service: switch.turn_on
+      data:
+        entity_id: switch.kitchen_switch
+    - service: switch.turn_off
+      data:
+        entity_id: switch.laundry_switch
