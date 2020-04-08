@@ -19,7 +19,7 @@ homeassistant:
 
 config:
 http:
-person:
+person: !include entities/persons.yaml
 ssdp:
 system_health:
 zeroconf:

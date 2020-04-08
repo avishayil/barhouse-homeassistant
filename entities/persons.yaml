@@ -1,0 +1,10 @@
+---
+
+- name: Avishay Bar
+  id: avishayil
+  device_trackers:
+    - device_tracker.avishay_razer
+- name: Lior Bar
+  id: liorbar
+  device_trackers:
+    - device_tracker.lior_mi_9
