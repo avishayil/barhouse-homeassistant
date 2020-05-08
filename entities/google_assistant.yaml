@@ -71,8 +71,8 @@ entity_config:
     name: Room Shower Light
     room: Bedroom
     expose: true
-  switch.tv:
-    name: Panasonic TV
+  media_player.tv:
+    name: Philips TV
     room: Living Room
     expose: true
   media_player.yamaha_receiver_living_room:
