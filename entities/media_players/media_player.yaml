@@ -6,7 +6,7 @@
   source_ignore:
     - "HDMI1"
   source_names:
-    HDMI2: "Mi Box"
+    HDMI2: "Custom"
     HDMI3: "Computer"
     HDMI4: "Playstation 4 Pro"
     Spotify: "Spotify"

@@ -9,3 +9,14 @@
     - service: google_assistant.request_sync
       data:
         agent_user_id: !secret google_agent_user_id
+
+- alias: 'Sync with Google Assistant'
+  id: shsync
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "shellies/command"
+        payload: "update"
