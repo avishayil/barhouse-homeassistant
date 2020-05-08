@@ -22,3 +22,12 @@
   host: !secret mi_box_host
   adbkey: "./android/adbkey"
   exclude_unnamed_apps: true
+
+- platform: philips_js
+  name: TV
+  host: !secret philips_tv_host
+  api_version: 6
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: 70:AF:24:BD:ED:A9

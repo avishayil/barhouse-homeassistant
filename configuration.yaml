@@ -24,6 +24,7 @@ ssdp:
 system_health:
 zeroconf:
 api:
+wake_on_lan:
 
 frontend:
   themes:

@@ -13,7 +13,3 @@
       friendly_name: "Projector"
       command_on: !secret projector_on
       command_off: !secret projector_off
-    tv:
-      friendly_name: "TV"
-      command_on: !secret tv_on
-      command_off: !secret tv_off
