@@ -90,12 +90,6 @@ entity_config:
   cover.projection_screen:
     name: Projection Screen
     room: Living Room
-    aliases:
-      - Screen
-    expose: true
-  cover.projection_screen:
-    name: Projection Screen
-    room: Living Room
     expose: true
   cover.bedroom_cover:
     name: Sleep Cover
