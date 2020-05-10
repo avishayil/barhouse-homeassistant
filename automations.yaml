@@ -20,3 +20,15 @@
       data:
         topic: "shellies/command"
         payload: "update"
+
+- alias: 'Stop projection screen when it reaches 45 precent'
+  id: prjstop
+  trigger:
+    platform: numeric_state
+    entity_id: cover.projection_screen
+    value_template: "{{ state.attributes.current_position }}"
+    below: 45
+  action:
+    - service: cover.stop_cover
+      data:
+        entity_id: cover.projection_screen
