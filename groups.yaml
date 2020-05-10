@@ -54,9 +54,6 @@ fans:
 scripts:
   name: Scripts
   entities:
-    - script.open_projection_screen
-    - script.close_projection_screen
-    - script.stop_projection_screen
     - script.open_chelsea
     - script.turn_on_projector
     - script.turn_off_projector
