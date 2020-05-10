@@ -1,7 +1,24 @@
 ---
 
+- platform: template
+  covers:
+    projection_screen:
+      friendly_name: "Projection Screen"
+      device_class: shutter
+      open_cover:
+        service: cover.set_cover_position
+        data:
+          entity_id:  cover.projection_screen_controller
+          position: 45
+      close_cover:
+        service: cover.close_cover
+        entity_id: cover.projection_screen_controller
+      stop_cover:
+        service: cover.stop_cover
+        entity_id: cover.projection_screen_controller
+
 - platform: mqtt
-  name: "Projection Screen"
+  name: "Projection Screen Controller"
   device_class: shutter
   command_topic: "shellies/shellyswitch25-688A67/roller/0/command"
   position_topic: "shellies/shellyswitch25-688A67/roller/0/pos"

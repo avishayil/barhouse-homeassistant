@@ -22,4 +22,3 @@
   mac: 70:AF:24:BD:ED:A9
   username: !secret philips_tv_username
   password: !secret philips_tv_password
-  favorite_channels_only: true
