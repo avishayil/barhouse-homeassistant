@@ -6,13 +6,13 @@
       friendly_name: "Projection Screen"
       device_class: shutter
       open_cover:
+        service: cover.open_cover
+        entity_id: cover.projection_screen_controller
+      close_cover:
         service: cover.set_cover_position
         data:
           entity_id: cover.projection_screen_controller
           position: 45
-      close_cover:
-        service: cover.close_cover
-        entity_id: cover.projection_screen_controller
       stop_cover:
         service: cover.stop_cover
         entity_id: cover.projection_screen_controller
