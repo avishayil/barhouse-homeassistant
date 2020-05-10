@@ -14,8 +14,8 @@
   payload_stop: "stop"
   payload_available: "true"
   payload_not_available: "false"
-  position_open: 45
-  position_closed: 0
+  position_open: 100
+  position_closed: 45
   optimistic: false
 
 - platform: mqtt
