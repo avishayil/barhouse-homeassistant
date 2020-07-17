@@ -25,6 +25,7 @@ system_health:
 zeroconf:
 api:
 wake_on_lan:
+mobile_app:
 
 frontend:
   themes:

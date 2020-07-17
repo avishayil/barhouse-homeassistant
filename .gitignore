@@ -14,6 +14,9 @@ secrets.yaml
 html5_push_registrations.conf
 known_devices.yaml
 
+# Home Assistant Components Data
+.aarlo/
+
 # Git Secret
 .gitsecret/keys/random_seed
 !*.secret
