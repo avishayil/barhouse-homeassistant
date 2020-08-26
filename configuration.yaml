@@ -112,3 +112,8 @@ alarm_control_panel:
 calendar:
   - platform: todoist
     token: !secret todoist_token
+
+fan:
+  - platform: xiaomi_miio
+    host: !secret mi_host
+    token: !secret mi_token
