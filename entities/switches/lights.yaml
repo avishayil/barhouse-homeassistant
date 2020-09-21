@@ -19,43 +19,33 @@
   retain: true
 
 - platform: broadlink
-  host: !secret broadlink_host
   mac: !secret broadlink_mac
-  timeout: 15
   switches:
-    family_room_switch:
-      friendly_name: "Family Room Light"
+    - name: "Family Room Light"
       command_on: !secret family_room_switch_on
       command_off: !secret family_room_switch_off
-    kitchen_switch:
-      friendly_name: "Kitchen Light"
+    - name: "Kitchen Light"
       command_on: !secret kitchen_switch_on
       command_off: !secret kitchen_switch_off
-    laundry_switch:
-      friendly_name: "Laundry Light"
+    - name: "Laundry Light"
       command_on: !secret laundry_switch_on
       command_off: !secret laundry_switch_off
-    food_switch:
-      friendly_name: "Food Corner Light"
+    - name: "Food Corner Light"
       command_on: !secret food_switch_on
       command_off: !secret food_switch_off
-    office_switch:
-      friendly_name: "Office Light"
+    - name: "Office Light"
       command_on: !secret office_switch_on
       command_off: !secret office_switch_off
-    guest_room_switch:
-      friendly_name: "Guest Room Light"
+    - name: "Guest Room Light"
       command_on: !secret guest_room_switch_on
       command_off: !secret guest_room_switch_off
-    kids_switch:
-      friendly_name: "Kids Switch"
+    - name: "Kids Switch"
       command_on: !secret kids_switch_on
       command_off: !secret kids_switch_off
-    shower_switch:
-      friendly_name: "Shower Light"
+    - name: "Shower Light"
       command_on: !secret shower_switch_on
       command_off: !secret shower_switch_off
-    room_shower_switch:
-      friendly_name: "Room Shower Light"
+    - name: "Room Shower Light"
       command_on: !secret room_shower_switch_on
       command_off: !secret room_shower_switch_off
+

@@ -1,3 +1,4 @@
+import traceback
 import threading
 import time
 
@@ -17,7 +18,7 @@ class ArloBackgroundWorker(threading.Thread):
 
     def _run_next(self):
 
-        # timout in the future
+        # timeout in the future
         timeout = int(time.monotonic() + 60)
 
         # go by priority...
@@ -33,7 +34,7 @@ class ArloBackgroundWorker(threading.Thread):
                     try:
                         job['callback'](**job['args'])
                     except Exception as e:
-                        self._arlo.debug('job-error={}'.format(type(e).__name__))
+                        self._arlo.error('job-error={}\n{}'.format(type(e).__name__, traceback.format_exc()))
 
                     # reschedule?
                     self._lock.acquire()
@@ -47,6 +48,7 @@ class ArloBackgroundWorker(threading.Thread):
                 else:
                     if run_at < timeout:
                         timeout = run_at
+                    break
 
         return timeout
 

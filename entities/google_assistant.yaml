@@ -27,7 +27,7 @@ entity_config:
     name: Bedroom Fan
     room: Bedroom
     expose: true
-  switch.kitchen_switch:
+  switch.kitchen_light:
     name: Kitchen Light
     room: Kitchen
     expose: true
@@ -35,15 +35,15 @@ entity_config:
     name: Kitchen Venta
     room: Kitchen
     expose: true
-  switch.laundry_switch:
+  switch.laundry_light:
     name: Laundry Light
-    room: Laundry Room
+    room: Kitchen
     expose: true
-  switch.office_switch:
+  switch.office_light:
     name: Office Light
     room: Office
     expose: true
-  switch.guest_room_switch:
+  switch.guest_room_light:
     name: Guest Room Switch
     room: Living Room
     expose: true
@@ -51,7 +51,7 @@ entity_config:
     name: Guest Room Venta
     room: Living Room
     expose: true
-  switch.food_switch:
+  switch.food_corner_light:
     name: Food Light
     room: Food Corner
     expose: true
@@ -59,7 +59,7 @@ entity_config:
     name: Kids Light
     room: Kids Room
     expose: true
-  switch.shower_switch:
+  switch.shower_light:
     name: Shower Light
     room: Shower
     expose: true
@@ -67,7 +67,7 @@ entity_config:
     name: Switcher
     room: Shower
     expose: true
-  switch.room_shower_switch:
+  switch.room_shower_light:
     name: Room Shower Light
     room: Bedroom
     expose: true
@@ -79,8 +79,8 @@ entity_config:
     name: Receiver
     room: Living Room
     expose: true
-  climate.mazgan:
-    name: Mazgan
+  climate.living_ro:
+    name: Living Air
     room: Living Room
     expose: true
   climate.bedroom_air:
@@ -99,12 +99,16 @@ entity_config:
     name: Salon Cover
     room: Living Room
     expose: true
-  cover.laundry_room_cover:
-    name: Laundry Cover
-    room: Laundry Room
+  cover.kitchen_cover:
+    name: Kitchen Cover
+    room: Kitchen
     expose: true
   alarm_control_panel.aarlo_arlo:
     name: Alarm
+    room: Living Room
+    expose: true
+  vacuum.ruby:
+    name: Ruby
     room: Living Room
     expose: true
   script.turn_on_projector:

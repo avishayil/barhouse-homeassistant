@@ -15,14 +15,14 @@ import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 from homeassistant.components import websocket_api
 from homeassistant.components.alarm_control_panel import (DOMAIN,
-                                                          AlarmControlPanel,
+                                                          AlarmControlPanelEntity,
                                                           FORMAT_NUMBER,
                                                           FORMAT_TEXT)
 from homeassistant.components.alarm_control_panel.const import (
-        SUPPORT_ALARM_ARM_HOME,
-        SUPPORT_ALARM_ARM_AWAY,
-        SUPPORT_ALARM_ARM_NIGHT,
-        SUPPORT_ALARM_TRIGGER)
+    SUPPORT_ALARM_ARM_HOME,
+    SUPPORT_ALARM_ARM_AWAY,
+    SUPPORT_ALARM_ARM_NIGHT,
+    SUPPORT_ALARM_TRIGGER)
 from homeassistant.const import (ATTR_ATTRIBUTION,
                                  ATTR_ENTITY_ID,
                                  CONF_CODE,
@@ -36,7 +36,8 @@ from homeassistant.core import callback
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.config_validation import (PLATFORM_SCHEMA)
 from homeassistant.helpers.event import track_point_in_time
-from . import COMPONENT_ATTRIBUTION, COMPONENT_DATA, COMPONENT_BRAND, COMPONENT_DOMAIN, COMPONENT_SERVICES, get_entity_from_domain
+from . import COMPONENT_ATTRIBUTION, COMPONENT_DATA, COMPONENT_BRAND, COMPONENT_DOMAIN, COMPONENT_SERVICES, \
+    get_entity_from_domain
 from .pyaarlo.constant import (MODE_KEY,
                                SIREN_STATE_KEY)
 
@@ -171,14 +172,14 @@ async def async_setup_platform(hass, config, async_add_entities, _discovery_info
         )
 
 
-class ArloBaseStation(AlarmControlPanel):
+class ArloBaseStation(AlarmControlPanelEntity):
     """Representation of an Arlo Alarm Control Panel."""
 
     def __init__(self, device, config):
         """Initialize the alarm control panel."""
         self._config = config
         self._name = device.name
-        self._unique_id = self._name.lower().replace(' ', '_')
+        self._unique_id = device.entity_id
         self._base = device
         self._home_mode_name = config.get(CONF_HOME_MODE_NAME).lower()
         self._away_mode_name = config.get(CONF_AWAY_MODE_NAME).lower()
@@ -276,6 +277,9 @@ class ArloBaseStation(AlarmControlPanel):
     def alarm_arm_custom_bypass(self, code=None):
         pass
 
+    def restart(self):
+        self._base.restart()
+
     @property
     def unique_id(self):
         """Return a unique ID."""
@@ -284,18 +288,16 @@ class ArloBaseStation(AlarmControlPanel):
     @property
     def device_state_attributes(self):
         """Return the state attributes."""
-        attrs = {}
-
-        attrs[ATTR_ATTRIBUTION] = COMPONENT_ATTRIBUTION
-        attrs[ATTR_TIME_ZONE] = self._base.timezone
-        attrs['brand'] = COMPONENT_BRAND
-        attrs['device_id'] = self._base.device_id
-        attrs['model_id'] = self._base.model_id
-        attrs['friendly_name'] = self._name
-        attrs['on_schedule'] = self._base.on_schedule
-        attrs['siren'] = self._base.has_capability(SIREN_STATE_KEY)
-
-        return attrs
+        return {
+            ATTR_ATTRIBUTION: COMPONENT_ATTRIBUTION,
+            ATTR_TIME_ZONE: self._base.timezone,
+            'brand': COMPONENT_BRAND,
+            'device_id': self._base.device_id,
+            'model_id': self._base.model_id,
+            'friendly_name': self._name,
+            'on_schedule': self._base.on_schedule,
+            'siren': self._base.has_capability(SIREN_STATE_KEY)
+        }
 
     def _get_state_from_ha(self, mode):
         """Convert Arlo mode to Home Assistant state."""
@@ -336,11 +338,11 @@ class ArloBaseStation(AlarmControlPanel):
             return True
         return False
 
-    def async_siren_on(self, duration, volume):
-        return self.hass.async_add_job(self.siren_on, duration=duration, volume=volume)
+    async def async_siren_on(self, duration, volume):
+        return await self.hass.async_add_executor_job(self.siren_on, duration, volume)
 
-    def async_siren_off(self):
-        return self.hass.async_add_job(self.siren_off)
+    async def async_siren_off(self):
+        return await self.hass.async_add_executor_job(self.siren_off)
 
     def _validate_code(self, code, state):
         """Validate given code."""
@@ -406,20 +408,29 @@ async def aarlo_siren_off_service_handler(base, _service):
 
 async def async_alarm_mode_service(hass, call):
     for entity_id in call.data['entity_id']:
-        mode = call.data['mode']
-        _LOGGER.info("{0} setting mode to {1}".format(entity_id,mode))
-        get_entity_from_domain(hass,DOMAIN,entity_id).set_mode_in_ha(mode)
+        try:
+            mode = call.data['mode']
+            get_entity_from_domain(hass, DOMAIN, entity_id).set_mode_in_ha(mode)
+            _LOGGER.info("{0} setting mode to {1}".format(entity_id, mode))
+        except HomeAssistantError:
+            _LOGGER.warning("{0} is not an aarlo alarm device".format(entity_id))
 
 
 async def async_alarm_siren_on_service(hass, call):
     for entity_id in call.data['entity_id']:
-        volume = call.data['volume']
-        duration = call.data['duration']
-        _LOGGER.info("{0} siren on {1}/{2}".format(entity_id,volume,duration))
-        get_entity_from_domain(hass,DOMAIN,entity_id).siren_on(duration=duration, volume=volume)
+        try:
+            volume = call.data['volume']
+            duration = call.data['duration']
+            get_entity_from_domain(hass, DOMAIN, entity_id).siren_on(duration=duration, volume=volume)
+            _LOGGER.info("{0} siren on {1}/{2}".format(entity_id, volume, duration))
+        except HomeAssistantError:
+            _LOGGER.warning("{0} is not an aarlo alarm device".format(entity_id))
 
 
 async def async_alarm_siren_off_service(hass, call):
     for entity_id in call.data['entity_id']:
-        _LOGGER.info("{0} siren off".format(entity_id))
-        get_entity_from_domain(hass,DOMAIN,entity_id).siren_off()
+        try:
+            get_entity_from_domain(hass, DOMAIN, entity_id).siren_off()
+            _LOGGER.info("{0} siren off".format(entity_id))
+        except HomeAssistantError:
+            _LOGGER.warning("{0} is not an aarlo alarm device".format(entity_id))

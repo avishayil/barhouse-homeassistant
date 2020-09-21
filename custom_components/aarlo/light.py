@@ -8,7 +8,6 @@ https://home-assistant.io/components/sensor.arlo/
 import logging
 import pprint
 
-import homeassistant.util.color as color_util
 from homeassistant.components.light import (ATTR_BRIGHTNESS,
                                             ATTR_COLOR_TEMP,
                                             ATTR_EFFECT,
@@ -17,18 +16,22 @@ from homeassistant.components.light import (ATTR_BRIGHTNESS,
                                             SUPPORT_COLOR,
                                             SUPPORT_COLOR_TEMP,
                                             SUPPORT_EFFECT,
-                                            Light)
+                                            LightEntity)
 from homeassistant.const import (ATTR_ATTRIBUTION,
                                  ATTR_BATTERY_CHARGING,
                                  ATTR_BATTERY_LEVEL)
 from homeassistant.core import callback
 import homeassistant.util.color as color_util
 from . import COMPONENT_ATTRIBUTION, COMPONENT_DATA, COMPONENT_BRAND
-from .pyaarlo.constant import (BRIGHTNESS_KEY,
-                               LAMP_STATE_KEY,
-                               LIGHT_BRIGHTNESS_KEY,
-                               LIGHT_MODE_KEY,
-                               NIGHTLIGHT_KEY)
+from .pyaarlo.constant import (
+    BRIGHTNESS_KEY,
+    FLOODLIGHT_KEY,
+    LAMP_STATE_KEY,
+    LIGHT_BRIGHTNESS_KEY,
+    LIGHT_MODE_KEY,
+    NIGHTLIGHT_KEY,
+    SPOTLIGHT_KEY,
+    SPOTLIGHT_BRIGHTNESS_KEY)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -53,16 +56,20 @@ async def async_setup_platform(hass, _config, async_add_entities, _discovery_inf
     for camera in arlo.cameras:
         if camera.has_capability(NIGHTLIGHT_KEY):
             lights.append(ArloNightLight(camera))
+        if camera.has_capability(FLOODLIGHT_KEY):
+            lights.append(ArloFloodLight(camera))
+        if camera.has_capability(SPOTLIGHT_KEY):
+            lights.append(ArloSpotlight(camera))
 
     async_add_entities(lights, True)
 
 
-class ArloLight(Light):
+class ArloLight(LightEntity):
 
     def __init__(self, light):
         """Initialize an Arlo light."""
         self._name = light.name
-        self._unique_id = self._name.lower().replace(' ', '_')
+        self._unique_id = light.entity_id
         self._state = "off"
         self._brightness = None
         self._light = light
@@ -270,3 +277,152 @@ class ArloNightLight(ArloLight):
     def supported_features(self):
         """Flag features that are supported."""
         return SUPPORT_BRIGHTNESS | SUPPORT_COLOR | SUPPORT_COLOR_TEMP | SUPPORT_EFFECT
+
+
+class ArloFloodLight(ArloLight):
+    def __init__(self, camera):
+        self._brightness = None
+        self._mode = None
+
+        self._duration = None
+        self._als_sensitivity = None
+
+        self._sleep_time = None
+        self._sleep_time_rel = None
+
+        super().__init__(camera)
+
+        _LOGGER.info("ArloFloodLight: %s created", self._name)
+
+    async def async_added_to_hass(self):
+        """Register callbacks."""
+
+        def set_states(state):
+            if "on" in state:
+                self._state = "on" if state.get("on") else "off"
+            if "brightness1" in state:
+                self._brightness = int(state.get("brightness1") / 100.0 * 255)
+            if "behavior" in state:
+                self._mode = state.get("behavior")
+            if "alsSensitivity" in state:
+                self._als_sensitivity = state.get("alsSensitivity")
+            if "duration" in state:
+                self._duration = state.get("duration")
+            if self._state == 'on':
+                if "sleepTime" in state:
+                    self._sleep_time = state.get("sleepTime")
+                if "sleepTimeRel" in state:
+                    self._sleep_time_rel = state.get("sleepTimeRel")
+            elif self._state == 'off':
+                self._sleep_time = None
+                self._sleep_time_rel = None
+
+        @callback
+        def update_attr(_light, attr, value):
+            _LOGGER.debug("callback:" + self._name + ":" + attr + ":" + str(value)[:80])
+            set_states(value)
+            self.async_schedule_update_ha_state()
+
+        _LOGGER.info("ArloFloodLight: %s registering callbacks", self._name)
+        floodlight = self._light.attribute(FLOODLIGHT_KEY, default={})
+        set_states(floodlight)
+
+        self._light.add_attr_callback(FLOODLIGHT_KEY, update_attr)
+
+    def turn_on(self, **kwargs):
+        """Turn the entity on."""
+        _LOGGER.debug("turn_on: {} {} {}".format(self._name, self._state, kwargs))
+
+        self._light.floodlight_on()
+        if ATTR_BRIGHTNESS in kwargs:
+            self._light.set_floodlight_brightness(kwargs[ATTR_BRIGHTNESS])
+
+    def turn_off(self, **kwargs):
+        """Turn the entity off."""
+        self._light.floodlight_off()
+
+    @property
+    def brightness(self):
+        """Return the brightness of the light."""
+        return self._brightness
+
+    @property
+    def supported_features(self):
+        """Flag features that are supported."""
+        return SUPPORT_BRIGHTNESS
+
+    @property
+    def device_state_attributes(self):
+        """Return the state attributes."""
+
+        super_attrs = super().device_state_attributes
+        flood_attrs = {
+            name: value
+            for name, value in (
+                ("duration", self._duration),
+                ("sleep_time_rel", self._sleep_time_rel),
+                ("sleep_time", self._sleep_time),
+                ("mode", self._mode),
+                ("als_sensitivity", self._als_sensitivity),
+            )
+            if value is not None
+        }
+        attrs = dict()
+        attrs.update(super_attrs)
+        attrs.update(flood_attrs)
+
+        return attrs
+
+
+class ArloSpotlight(ArloLight):
+
+    def __init__(self, camera):
+        self._brightness = None
+        self._effect = None
+
+        super().__init__(camera)
+
+        _LOGGER.info('ArloSpotlight: %s created', self._name)
+
+    async def async_added_to_hass(self):
+        """Register callbacks."""
+
+        @callback
+        def update_attr(_light, attr, value):
+            _LOGGER.debug('callback:' + self._name + ':' + attr + ':' + str(value)[:80])
+            if attr == SPOTLIGHT_KEY:
+                self._state = value
+            if attr == SPOTLIGHT_BRIGHTNESS_KEY:
+                self._brightness = value / 100 * 255
+            self.async_schedule_update_ha_state()
+
+        _LOGGER.info('ArloSpotlight: %s registering callbacks', self._name)
+
+        self._state = self._light.attribute(SPOTLIGHT_KEY, default="off")
+        self._brightness = self._light.attribute(SPOTLIGHT_BRIGHTNESS_KEY, default=255)
+
+        self._light.add_attr_callback(SPOTLIGHT_KEY, update_attr)
+        self._light.add_attr_callback(SPOTLIGHT_BRIGHTNESS_KEY, update_attr)
+        await super().async_added_to_hass()
+
+    def turn_on(self, **kwargs):
+        """Turn the entity on."""
+        _LOGGER.debug("turn_on: {} {} {}".format(self._name, self._state, kwargs))
+
+        self._light.set_spotlight_on()
+        if ATTR_BRIGHTNESS in kwargs:
+            self._light.set_spotlight_brightness(kwargs[ATTR_BRIGHTNESS])
+
+    def turn_off(self, **kwargs):
+        """Turn the entity off."""
+        self._light.set_spotlight_off()
+
+    @property
+    def brightness(self):
+        """Return the brightness of the light."""
+        return self._brightness
+
+    @property
+    def supported_features(self):
+        """Flag features that are supported."""
+        return SUPPORT_BRIGHTNESS

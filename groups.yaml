@@ -32,22 +32,21 @@ covers_view:
 lights:
   name: Lights
   entities:
-    - switch.family_room_switch
-    - switch.food_switch
-    - switch.guest_room_switch
+    - switch.family_room_light
+    - switch.food_corner_light
+    - switch.guest_room_light
     - switch.kids_switch
-    - switch.kitchen_switch
-    - switch.room_shower_switch
-    - switch.office_switch
-    - switch.laundry_switch
-    - switch.shower_switch
+    - switch.kitchen_light
+    - switch.room_shower_light
+    - switch.office_light
+    - switch.laundry_light
+    - switch.shower_light
 
 fans:
   name: Fans
   entities:
     - switch.guest_room_venta
     - switch.kitchen_venta
-    - switch.bedroom_fan
     - switch.living_room_fan
     - switch.kids_room_fan
 
@@ -77,13 +76,12 @@ conditioners:
   name: Conditioners
   entities:
     - climate.bedroom_air
-    - climate.mazgan
-    - switch.mazgan
+    - climate.living_ro
 
 covers:
   name: Covers
   entities:
     - cover.bedroom_cover
     - cover.living_room_cover
-    - cover.laundry_room_cover
-    - cover.projection_screen
+    - cover.kitchen_cover
+    - cover.projection_screen_controller

@@ -1,15 +1,11 @@
 ---
 
 - platform: broadlink
-  host: !secret broadlink_host
   mac: !secret broadlink_mac
-  timeout: 15
   switches:
-    kitchen_venta:
-      friendly_name: "Kitchen Venta"
+    - name: "Kitchen Venta"
       command_on: !secret kitchen_venta_on
       command_off: !secret kitchen_venta_off
-    guest_room_venta:
-      friendly_name: "Guest Room Venta"
+    - name: "Guest Room Venta"
       command_on: !secret guest_room_venta_on
       command_off: !secret guest_room_venta_off

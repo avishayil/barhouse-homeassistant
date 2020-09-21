@@ -30,16 +30,6 @@ mobile_app:
 frontend:
   themes:
     !include_dir_merge_named themes
-  extra_html_url:
-    - /local/hass-fontawesome-solid.html
-    - /local/hass-fontawesome-regular.html
-    - /local/hass-fontawesome-brands.html
-
-cast:
-  media_player:
-    - host: !secret bedroom_home_mini_host
-    - host: !secret living_room_home_host
-    - host: !secret kitchen_display_host
 
 # Text to speech
 tts:
@@ -67,30 +57,19 @@ notify:
     vapid_email: !secret email
 
 mqtt:
-  broker: k3s-master
+  broker: 10.0.0.51
   port: !secret mqtt_port
   username: !secret mqtt_username
   password: !secret mqtt_password
 
-smartir:
-
 climate:
   - platform: sensibo
     api_key: !secret climate_api_key
-  - platform: smartir
-    name: Mazgan
-    unique_id: living_room_ac
-    device_code: 100
-    controller_data: !secret broadlink_host
 
-ifttt:
-  key: !secret ifttt_api_key
-
-# vacuum:
-#   - platform: roomba
-#     host: !secret roomba_host
-#     username: !secret roomba_username
-#     password: !secret roomba_password
+roomba:
+  host: !secret roomba_host
+  blid: !secret roomba_username
+  password: !secret roomba_password
 
 device_tracker:
   - platform: netgear
@@ -112,3 +91,14 @@ alarm_control_panel:
 calendar:
   - platform: todoist
     token: !secret todoist_token
+
+camera:
+  - platform: aarlo
+
+binary_sensor:
+  - platform: aarlo
+    monitored_conditions:
+    - motion
+    - sound
+    - connectivity
+

@@ -7,15 +7,12 @@
       device_class: shutter
       open_cover:
         service: cover.open_cover
-        entity_id: cover.projection_screen_controller
       close_cover:
         service: cover.set_cover_position
         data:
-          entity_id: cover.projection_screen_controller
           position: 45
       stop_cover:
         service: cover.stop_cover
-        entity_id: cover.projection_screen_controller
       set_cover_position:
         service: cover.set_cover_position
         data_template:
@@ -83,7 +80,7 @@
   optimistic: false
 
 - platform: mqtt
-  name: "Laundry Room Cover"
+  name: "Kitchen Cover"
   device_class: shutter
   command_topic: "shellies/shellyswitch25-692148/roller/0/command"
   position_topic: "shellies/shellyswitch25-692148/roller/0/pos"
